@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="fr"
+      class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="metro4:init" content="true">
+    <meta name="metro4:locale" content="fr-FR">
+    <meta name="metro4:week_start" content="1">
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE"></title>
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" >
+</head>
+<body>
+<nav class="uk-navbar uk-navbar-container">
+    <div class="uk-navbar-left">
+        <a class="uk-navbar-toggle" uk-toggle="target: #offcanvas-overlay">
+            <span uk-navbar-toggle-icon></span> <span class="uk-margin-small-left">Tarot des Amis</span>
+        </a>
+    </div>
+    <div class="uk-navbar-right">
+        <div sec:authorize="isAnonymous()">
+            <a th:href="@{/login}">
+                    <span uk-icon="sign-in"></span>
+                    <span class="uk-margin-left"></span>
+            </a>
+        </div>
+    </div>
+
+</nav>
+<div id="offcanvas-overlay" uk-offcanvas="overlay: true">
+    <div class="uk-offcanvas-bar">
+        <button class="uk-offcanvas-close" type="button" uk-close></button>
+        <h5 class="uk-margin-top">MENU</h5>
+        <ul class="uk-nav uk-nav-default">
+            <li class="uk-active">
+                <a class="menuItem" th:href="@{/}">
+                    <div class="menuItemText">Réunion Active</div>
+                </a>
+            </li>
+            <li class="uk-active">
+                <a class="menuItem" th:href="@{/cagnottes}">
+                    <div class="menuItemText">Cagnottes</div>
+                </a>
+            </li>
+            <li class="uk-active">
+                <a class="menuItem" th:href="@{/amis}">
+                    <div class="menuItemText">Amis</div>
+                </a>
+            </li>
+            <div sec:authorize="isAuthenticated()">
+                <li class="uk-active">
+                    <a class="menuItem" th:href="@{/gestion}">
+                        <div class="menuItemText">Gestion</div>
+                    </a>
+                </li>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                <li class="uk-active">
+                    <a class="menuItem" th:href="@{/logout}">
+                        <div class="menuItemText">
+                            <span uk-icon="sign-out"></span>
+                            <span class="uk-margin-small-left">Déconnexion</span>
+                        </div>
+                    </a>
+                </li>
+            </div>
+        </ul>
+    </div>
+</div>
+
+<!-- Content Section -->
+<div layout:fragment="content" class="uk-container uk-container-expand"></div>
+
+
+<!-- Optional Section -->
+<th:block layout:fragment="optional" />
+
+<!-- Uikit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit-icons.min.js"></script>
+<script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Connexion</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+            <div class="uk-vertical-align-middle" style="width: 250px;">
+                <form class="uk-panel uk-panel-box uk-form" th:action="@{/login}" method="post">
+                    <div class="uk-form-row uk-margin">
+                        <input class="uk-width-1-1 uk-form-width-large uk-form-large" type="text" placeholder="Utilisateur" name="username">
+                    </div>
+                    <div class="uk-form-row uk-margin">
+                        <input class="uk-width-1-1 uk-form-width-large uk-form-large" type="password" placeholder="Mot de passe" name="password">
+                    </div>
+                    <div class="uk-form-row uk-margin">
+                        <button class="uk-button uk-button-primary">Connexion</button>
+                    </div>
+                </form>
+            </div>
+</div>
+
+</body>
+</html>
+

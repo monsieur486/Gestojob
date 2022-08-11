@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Réunion Active</title>
+</head>
+<body>
+
+
+<div layout:fragment="content">
+    <div>
+        <span th:if="${reunionActiveId}">
+            <p th:text="${reunionActiveId}"></p>
+        </span>
+        <span th:unless="${reunionActiveId}">
+            <h4>Réunion Active</h4>
+            <div sec:authorize="hasAuthority('ROLE_ADMIN')">
+                <button class="uk-button uk-button-primary">Ajouter une réunion</button>
+            </div>
+        </span>
+    </div>
+    <div class="uk-text-center" uk-grid>
+        <div class="uk-width-1-3">
+            <div class="uk-card uk-card-default uk-card-body">
+                <form>
+                    <input type="text" data-role="calendarpicker">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div layout:fragment="optional">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.js"></script>
+    <script th:src="@{${'/js/scripts.js'}}"></script>
+</div>
+
+</body>
+</html>

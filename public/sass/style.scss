@@ -1,0 +1,22 @@
+.uk-navbar-nav > li > a,
+.uk-navbar-item,
+.uk-navbar-toggle {
+  min-height: 50px !important;
+}
+
+$bg-color: #4561ea;
+$big_size: 2em;
+
+.menuItem {
+  background-color: $bg-color;
+  font-size: $big_size;
+  margin-top: 20px;
+}
+
+.menuItemText {
+  padding-left: 50px;
+}
+
+@import "node_modules/uikit/src/scss/variables-theme";
+@import "node_modules/uikit/src/scss/mixins-theme";
+@import "node_modules/uikit/src/scss/uikit-theme";
