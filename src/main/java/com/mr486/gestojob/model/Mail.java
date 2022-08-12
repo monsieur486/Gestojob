@@ -1,5 +1,6 @@
 package com.mr486.gestojob.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,19 @@ public class Mail implements Serializable {
   @Column(name = "name", length = 150, nullable = false)
   @NotBlank(message = "No empty field allowed")
   private String name;
+
+  @Basic
+  @Column(name = "mail_date")
+  private java.sql.Date mailDate;
+
+  @Basic
+  @Column(name = "mail_time")
+  private java.sql.Time mailTime;
+
+  @JsonIgnore
+  @ManyToOne
+  @JoinColumn( name="compagny_id", nullable=false )
+  private Compagny compagny;
 
   @Override
   public boolean equals(Object o) {

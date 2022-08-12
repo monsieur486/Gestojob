@@ -1,8 +1,11 @@
 package com.mr486.gestojob.controller.api;
 
+import com.mr486.gestojob.dto.CompagnyDto;
 import com.mr486.gestojob.model.Compagny;
 import com.mr486.gestojob.model.Message;
 import com.mr486.gestojob.service.CompagnyService;
+import com.mr486.gestojob.service.MailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +17,8 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class ApiCompagnyController {
 
-  private final CompagnyService compagnyService;
+  @Autowired
+  private CompagnyService compagnyService;
 
   public ApiCompagnyController(CompagnyService compagnyService) {
     this.compagnyService = compagnyService;
@@ -38,7 +42,7 @@ public class ApiCompagnyController {
       if(result.isPresent()){
         return Message.generateResponse(null, HttpStatus.OK, result);
       } else {
-        return Message.generateResponse("Entity not found with id: " + id.toString(), HttpStatus.NOT_FOUND, null);
+        return Message.generateResponse("Compagny not found with id: " + id.toString(), HttpStatus.NOT_FOUND, null);
       }
     } catch (Exception e) {
       return Message.generateResponse(e.getMessage(), HttpStatus.SERVICE_UNAVAILABLE, null);
@@ -46,10 +50,10 @@ public class ApiCompagnyController {
   }
 
   @PostMapping("/compagnies")
-  public ResponseEntity<Object> save(@RequestBody Compagny compagny) {
+  public ResponseEntity<Object> save(@RequestBody CompagnyDto compagny) {
     try {
       Compagny result = compagnyService.saveCompagny(compagny);
-      return Message.generateResponse("Entity successfully created.", HttpStatus.CREATED, result);
+      return Message.generateResponse("Compagny successfully created.", HttpStatus.CREATED, result);
     } catch (Exception e) {
       return Message.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null);
     }
@@ -59,7 +63,7 @@ public class ApiCompagnyController {
   public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody Compagny compagny) {
     try {
       Compagny result = compagnyService.updateCompagny(id, compagny);
-      return Message.generateResponse("Successfully updated", HttpStatus.CREATED, result);
+      return Message.generateResponse("Compagny successfully updated", HttpStatus.CREATED, result);
     } catch (Exception e) {
       return Message.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null);
     }
@@ -70,12 +74,13 @@ public class ApiCompagnyController {
     if(Boolean.TRUE.equals(compagnyService.existe(id))){
       try {
         compagnyService.deleteCompagnyById(id);
-        return Message.generateResponse("Entity deleted successfully", HttpStatus.ACCEPTED, null);
+        return Message.generateResponse("Compagny deleted successfully", HttpStatus.ACCEPTED, null);
       } catch (Exception e) {
         return Message.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null);
       }
     } else {
-      return Message.generateResponse("Entity not found with id: " + id.toString(), HttpStatus.NOT_FOUND, null);
+      return Message.generateResponse("Compagny not found with id: " + id.toString(), HttpStatus.NOT_FOUND, null);
     }
   }
+
 }

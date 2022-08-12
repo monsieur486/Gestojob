@@ -1,5 +1,6 @@
 package com.mr486.gestojob.service;
 
+import com.mr486.gestojob.dto.CompagnyDto;
 import com.mr486.gestojob.model.Compagny;
 import com.mr486.gestojob.repository.CompagnyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,17 @@ public class CompagnyService {
     return compagnies;
   }
 
-  public Compagny saveCompagny(Compagny compagny) {
-    return compagnyRepository.save(compagny);
+  public Compagny saveCompagny(CompagnyDto compagnyDto) {
+    Compagny result = new Compagny(
+      compagnyDto.getName(),
+      compagnyDto.getEmail(),
+      compagnyDto.getTelephone(),
+      compagnyDto.getAdress(),
+      compagnyDto.getComplement(),
+      compagnyDto.getPostalCode(),
+      compagnyDto.getCity()
+    );
+    return compagnyRepository.save(result);
   }
 
   public Compagny updateCompagny(Long id, Compagny compagny) {
