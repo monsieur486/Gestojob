@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface MailRepository extends JpaRepository<Mail, Long> {
-  List<Mail> findByCompagnyId(Long id);
+  List<Mail> findByCompanyId(Long id);
 }

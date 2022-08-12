@@ -5,7 +5,6 @@ import lombok.*;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Component;
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -15,6 +14,7 @@ import java.util.Objects;
 @ToString
 @NoArgsConstructor
 @Entity
+@Table(name = "mail")
 public class Mail implements Serializable {
 
   private static final long serialVersionUID = 4048798961366546485L;
@@ -22,10 +22,6 @@ public class Mail implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-
-  @Column(name = "name", length = 150, nullable = false)
-  @NotBlank(message = "No empty field allowed")
-  private String name;
 
   @Basic
   @Column(name = "mail_date")
@@ -37,8 +33,16 @@ public class Mail implements Serializable {
 
   @JsonIgnore
   @ManyToOne
-  @JoinColumn( name="compagny_id", nullable=false )
-  private Compagny compagny;
+  @JoinColumn( name="company_id", nullable=false )
+  private Company company;
+
+  @Enumerated(EnumType.ORDINAL)
+  @Column(name = "app_object")
+  private AppObject appObject;
+
+  @Lob
+  @Column(name="comment", length=512)
+  private String comment;
 
   @Override
   public boolean equals(Object o) {

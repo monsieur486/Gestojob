@@ -1,9 +1,9 @@
 package com.mr486.gestojob.repository;
 
-import com.mr486.gestojob.model.Telephone;
+import com.mr486.gestojob.model.Company;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TelephoneRepository extends JpaRepository<Telephone, Long> {
+public interface CompanyRepository extends JpaRepository<Company, Long> {
 }

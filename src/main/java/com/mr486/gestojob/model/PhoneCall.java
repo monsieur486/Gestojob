@@ -3,9 +3,10 @@ package com.mr486.gestojob.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.stereotype.Component;
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -15,7 +16,8 @@ import java.util.Objects;
 @ToString
 @NoArgsConstructor
 @Entity
-public class Telephone implements Serializable {
+@Table(name = "phone_call")
+public class PhoneCall implements Serializable {
 
   private static final long serialVersionUID = 4048798961366546485L;
 
@@ -23,29 +25,33 @@ public class Telephone implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "name", length = 150, nullable = false)
-  @NotBlank(message = "No empty field allowed")
-  private String name;
+  @Basic
+  @Column(name = "phone_call_date")
+  private java.sql.Date phoneCallDate;
 
   @Basic
-  @Column(name = "telephone_date")
-  private java.sql.Date telephoneDate;
-
-  @Basic
-  @Column(name = "telephone_time")
-  private java.sql.Time telephoneTime;
+  @Column(name = "phone_call_time")
+  private java.sql.Time phoneCallTime;
 
   @JsonIgnore
   @ManyToOne
-  @JoinColumn( name="compagny_id", nullable=false )
-  private Compagny compagny;
+  @JoinColumn( name="company_id", nullable=false )
+  private Company company;
+
+  @Enumerated(EnumType.ORDINAL)
+  @Column(name = "app_object")
+  private AppObject appObject;
+
+  @Lob
+  @Column(name="comment", length=512)
+  private String comment;
 
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-    Telephone telephone = (Telephone) o;
-    return id != null && Objects.equals(id, telephone.id);
+    PhoneCall phoneCall = (PhoneCall) o;
+    return id != null && Objects.equals(id, phoneCall.id);
   }
 
   @Override

@@ -15,7 +15,8 @@ import java.util.Objects;
 @ToString
 @NoArgsConstructor
 @Entity
-public class Compagny implements Serializable {
+@Table(name = "company")
+public class Company implements Serializable {
 
   private static final long serialVersionUID = 4048798961366546485L;
 
@@ -48,23 +49,28 @@ public class Compagny implements Serializable {
   @Column(name = "negative" )
   private Boolean negative = false;
 
-  @OneToMany(mappedBy="compagny")
-  private List<Mail> emailList;
+  @OneToMany(mappedBy="company", cascade = CascadeType.REMOVE)
+  private List<Mail> emailsList;
 
-  @OneToMany(mappedBy="compagny")
-  private List<Telephone> phoneCalls;
+  @OneToMany(mappedBy="company", cascade = CascadeType.REMOVE)
+  private List<PhoneCall> phoneCallsList;
 
-  @OneToMany(mappedBy="compagny")
-  private List<Appointment> appointmentList;
+  @OneToMany(mappedBy="company", cascade = CascadeType.REMOVE)
+  private List<Appointment> appointmentsList;
 
-  public Compagny(
+  @Lob
+  @Column(name="comment", length=512)
+  private String comment;
+
+  public Company(
     String name,
     String email,
     String telephone,
     String adress,
     String complement,
     String postalCode,
-    String city
+    String city,
+    String comment
   ){
     this.name = name;
     this.email = email;
@@ -73,6 +79,7 @@ public class Compagny implements Serializable {
     this.complement = complement;
     this.postalCode = postalCode;
     this.city = city;
+    this.comment = comment;
     this.negative = true;
   }
 
@@ -80,8 +87,8 @@ public class Compagny implements Serializable {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-    Compagny compagny = (Compagny) o;
-    return id != null && Objects.equals(id, compagny.id);
+    Company company = (Company) o;
+    return id != null && Objects.equals(id, company.id);
   }
 
   @Override

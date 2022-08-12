@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @NoArgsConstructor
-public class CompagnyDto {
+public class CompanyDto {
   private String name;
   private String email;
   private String telephone;
@@ -15,5 +15,6 @@ public class CompagnyDto {
   private String complement;
   private String postalCode;
   private String city;
+  private String comment;
   private Boolean negative = false;
 }

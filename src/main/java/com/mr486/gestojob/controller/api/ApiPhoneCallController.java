@@ -2,10 +2,10 @@ package com.mr486.gestojob.controller.api;
 
 import com.mr486.gestojob.model.Appointment;
 import com.mr486.gestojob.model.Company;
-import com.mr486.gestojob.model.Mail;
+import com.mr486.gestojob.model.PhoneCall;
 import com.mr486.gestojob.model.Message;
-import com.mr486.gestojob.service.AppointmentService;
 import com.mr486.gestojob.service.CompanyService;
+import com.mr486.gestojob.service.PhoneCallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,31 +16,31 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api")
-public class ApiAppointmentController {
+public class ApiPhoneCallController {
 
-  private final AppointmentService appointmentService;
+  private final PhoneCallService phoneCallService;
 
   @Autowired
   private CompanyService companyService;
 
-  public ApiAppointmentController(AppointmentService appointmentService) {
-    this.appointmentService = appointmentService;
+  public ApiPhoneCallController(PhoneCallService phoneCallService) {
+    this.phoneCallService = phoneCallService;
   }
 
-  @GetMapping(value = "/appointments")
-  public ResponseEntity<Object> allAppointment() {
+  @GetMapping(value = "/phone_calls")
+  public ResponseEntity<Object> allTelephone() {
     try {
-      List<Appointment> result = appointmentService.allAppointment();
+      List<PhoneCall> result = phoneCallService.allPhoneCall();
       return Message.generateResponse(null, HttpStatus.OK, result);
     } catch (Exception e) {
       return Message.generateResponse(e.getMessage(), HttpStatus.SERVICE_UNAVAILABLE, null);
     }
   }
 
-  @GetMapping("/appointments/{id}")
-  public ResponseEntity<Object> getAppointment(@PathVariable Long id) {
+  @GetMapping("/phone_calls/{id}")
+  public ResponseEntity<Object> getTelephone(@PathVariable Long id) {
     try {
-      Optional<Appointment> result = Optional.ofNullable(appointmentService.appointmentById(id));
+      Optional<PhoneCall> result = Optional.ofNullable(phoneCallService.phoneCallById(id));
 
       if(result.isPresent()){
         return Message.generateResponse(null, HttpStatus.OK, result);
@@ -52,15 +52,15 @@ public class ApiAppointmentController {
     }
   }
 
-  @PostMapping("/companies/{id}/appoinments")
-  public ResponseEntity<Object> save(@RequestBody Appointment appointment, @PathVariable Long id) {
+  @PostMapping("/companies/{id}/phone_calls")
+  public ResponseEntity<Object> save(@RequestBody PhoneCall phoneCall, @PathVariable Long id) {
 
     if(Boolean.TRUE.equals(companyService.existe(id))){
       Company company = companyService.companyById(id);
       try {
-        appointment.setCompany(company);
-        Appointment result = appointmentService.saveAppointment(appointment);
-        return Message.generateResponse("Appoinment successfully created.", HttpStatus.CREATED, result);
+        phoneCall.setCompany(company);
+        PhoneCall result = phoneCallService.savePhoneCall(phoneCall);
+        return Message.generateResponse("Phone call successfully created.", HttpStatus.CREATED, result);
       } catch (Exception e) {
         return Message.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null);
       }
@@ -70,21 +70,21 @@ public class ApiAppointmentController {
 
   }
 
-  @PutMapping("/appointments/{id}")
-  public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody Appointment appointment) {
+  @PutMapping("/phone_calls/{id}")
+  public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody PhoneCall phoneCall) {
     try {
-      Appointment result = appointmentService.updateAppointment(id, appointment);
+      PhoneCall result = phoneCallService.updatePhoneCall(id, phoneCall);
       return Message.generateResponse("Successfully updated", HttpStatus.CREATED, result);
     } catch (Exception e) {
       return Message.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null);
     }
   }
 
-  @DeleteMapping("/appointments/{id}")
+  @DeleteMapping("/phone_calls/{id}")
   public ResponseEntity<Object> delete(@PathVariable Long id) {
-    if(Boolean.TRUE.equals(appointmentService.existe(id))){
+    if(Boolean.TRUE.equals(phoneCallService.existe(id))){
       try {
-        appointmentService.deleteAppointmentById(id);
+        phoneCallService.deletePhoneCallById(id);
         return Message.generateResponse("Entity deleted successfully", HttpStatus.ACCEPTED, null);
       } catch (Exception e) {
         return Message.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null);
