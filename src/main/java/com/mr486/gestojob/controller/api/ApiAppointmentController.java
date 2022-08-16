@@ -1,9 +1,6 @@
 package com.mr486.gestojob.controller.api;
 
-import com.mr486.gestojob.model.Appointment;
-import com.mr486.gestojob.model.Company;
-import com.mr486.gestojob.model.Mail;
-import com.mr486.gestojob.model.Message;
+import com.mr486.gestojob.model.*;
 import com.mr486.gestojob.service.AppointmentService;
 import com.mr486.gestojob.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +24,21 @@ public class ApiAppointmentController {
     this.appointmentService = appointmentService;
   }
 
-  @GetMapping(value = "/appointments")
-  public ResponseEntity<Object> allAppointment() {
-    try {
-      List<Appointment> result = appointmentService.allAppointment();
-      return Message.generateResponse(null, HttpStatus.OK, result);
-    } catch (Exception e) {
-      return Message.generateResponse(e.getMessage(), HttpStatus.SERVICE_UNAVAILABLE, null);
+  @GetMapping(value = "/companies/{id}/appointments")
+  public ResponseEntity<Object> allAppointmentsByCompanyId(@PathVariable Long id) {
+    if(Boolean.TRUE.equals(companyService.existe(id))){
+      try {
+        List<Appointment> result = appointmentService.appointmentsByCompanyId(id);
+        return Message.generateResponse(null, HttpStatus.OK, result);
+      } catch (Exception e) {
+        return Message.generateResponse(e.getMessage(), HttpStatus.SERVICE_UNAVAILABLE, null);
+      }
+    } else {
+      return Message.generateResponse(
+        "Company not found with id: " + id.toString(),
+        HttpStatus.NOT_FOUND,
+        null
+      );
     }
   }
 
@@ -45,7 +50,7 @@ public class ApiAppointmentController {
       if(result.isPresent()){
         return Message.generateResponse(null, HttpStatus.OK, result);
       } else {
-        return Message.generateResponse("Entity not found with id: " + id.toString(), HttpStatus.NOT_FOUND, null);
+        return Message.generateResponse("Appointment not found with id: " + id.toString(), HttpStatus.NOT_FOUND, null);
       }
     } catch (Exception e) {
       return Message.generateResponse(e.getMessage(), HttpStatus.SERVICE_UNAVAILABLE, null);

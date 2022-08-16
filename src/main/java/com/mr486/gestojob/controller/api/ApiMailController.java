@@ -26,25 +26,31 @@ public class ApiMailController {
     this.mailService = mailService;
   }
 
-  @GetMapping(value = "/emails")
-  public ResponseEntity<Object> allMail() {
-    try {
-      List<Mail> result = mailService.allMail();
-      return Message.generateResponse(null, HttpStatus.OK, result);
-    } catch (Exception e) {
-      return Message.generateResponse(e.getMessage(), HttpStatus.SERVICE_UNAVAILABLE, null);
+  @GetMapping(value = "/companies/{id}/emails")
+  public ResponseEntity<Object> allMailsByCompanyId(@PathVariable Long id) {
+    if(Boolean.TRUE.equals(companyService.existe(id))){
+      try {
+        List<Mail> result = mailService.mailsByCompanyId(id);
+        return Message.generateResponse(null, HttpStatus.OK, result);
+      } catch (Exception e) {
+        return Message.generateResponse(e.getMessage(), HttpStatus.SERVICE_UNAVAILABLE, null);
+      }
+    } else {
+      return Message.generateResponse(
+        "Company not found with id: " + id.toString(),
+        HttpStatus.NOT_FOUND,
+        null
+      );
     }
   }
-
   @GetMapping("/emails/{id}")
   public ResponseEntity<Object> getMail(@PathVariable Long id) {
     try {
       Optional<Mail> result = Optional.ofNullable(mailService.mailById(id));
-
       if(result.isPresent()){
         return Message.generateResponse(null, HttpStatus.OK, result);
       } else {
-        return Message.generateResponse("Entity not found with id: " + id.toString(), HttpStatus.NOT_FOUND, null);
+        return Message.generateResponse("Mail not found with id: " + id.toString(), HttpStatus.NOT_FOUND, null);
       }
     } catch (Exception e) {
       return Message.generateResponse(e.getMessage(), HttpStatus.SERVICE_UNAVAILABLE, null);
@@ -53,7 +59,6 @@ public class ApiMailController {
 
   @PostMapping("/companies/{id}/emails")
   public ResponseEntity<Object> save(@RequestBody Mail mail, @PathVariable Long id) {
-
     if(Boolean.TRUE.equals(companyService.existe(id))){
       Company company = companyService.companyById(id);
       try {
@@ -66,7 +71,6 @@ public class ApiMailController {
     } else {
       return Message.generateResponse("Company not found with id: " + id.toString(), HttpStatus.NOT_FOUND, null);
     }
-
   }
 
   @PutMapping("/emails/{id}")

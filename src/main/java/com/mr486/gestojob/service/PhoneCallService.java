@@ -1,5 +1,6 @@
 package com.mr486.gestojob.service;
 
+import com.mr486.gestojob.model.Mail;
 import com.mr486.gestojob.model.PhoneCall;
 import com.mr486.gestojob.repository.PhoneCallRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,9 @@ public class PhoneCallService {
     return phoneCallRepository.findById(id).orElse(null);
   }
 
-  public List<PhoneCall> allPhoneCall() {
+  public List<PhoneCall> phoneCallsByCompanyId(Long id) {
     List<PhoneCall> phoneCalls;
-    phoneCalls = phoneCallRepository.findAll();
+    phoneCalls = phoneCallRepository.findByCompanyIdOrderByPhoneCallDateDesc(id);
     return phoneCalls;
   }
 

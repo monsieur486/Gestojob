@@ -1,7 +1,6 @@
 package com.mr486.gestojob.service;
 
 import com.mr486.gestojob.model.Mail;
-import com.mr486.gestojob.repository.CompanyRepository;
 import com.mr486.gestojob.repository.MailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +13,6 @@ public class MailService {
   @Autowired
   private MailRepository mailRepository;
 
-  @Autowired
-  private CompanyRepository companyRepository;
-
   public Boolean existe(Long id) {
     return mailRepository.existsById(id);
   }
@@ -25,13 +21,9 @@ public class MailService {
     return mailRepository.findById(id).orElse(null);
   }
 
-  public List<Mail> mailByCompanyId(Long id) {
-        return mailRepository.findByCompanyId(id);
-  }
-
-  public List<Mail> allMail() {
+  public List<Mail> mailsByCompanyId(Long id) {
     List<Mail> mails;
-    mails = mailRepository.findAll();
+    mails = mailRepository.findByCompanyIdOrderByMailDateDesc(id);
     return mails;
   }
 

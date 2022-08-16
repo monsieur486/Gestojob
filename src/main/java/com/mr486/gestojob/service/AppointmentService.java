@@ -1,6 +1,7 @@
 package com.mr486.gestojob.service;
 
 import com.mr486.gestojob.model.Appointment;
+import com.mr486.gestojob.model.Mail;
 import com.mr486.gestojob.repository.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +22,9 @@ public class AppointmentService {
     return appointmentRepository.findById(id).orElse(null);
   }
 
-  public List<Appointment> allAppointment() {
+  public List<Appointment> appointmentsByCompanyId(Long id) {
     List<Appointment> appointments;
-    appointments = appointmentRepository.findAll();
+    appointments = appointmentRepository.findByCompanyIdOrderByAppointmentDateDesc(id);
     return appointments;
   }
 
