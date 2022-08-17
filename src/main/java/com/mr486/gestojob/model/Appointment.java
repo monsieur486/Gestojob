@@ -3,8 +3,6 @@ package com.mr486.gestojob.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -34,7 +32,7 @@ public class Appointment implements Serializable {
   private java.sql.Time appointmentTime;
 
   @JsonIgnore
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn( name="company_id", nullable=false )
   private Company company;
 

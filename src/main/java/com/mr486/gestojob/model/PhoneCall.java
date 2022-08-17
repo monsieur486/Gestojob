@@ -34,7 +34,7 @@ public class PhoneCall implements Serializable {
   private java.sql.Time phoneCallTime;
 
   @JsonIgnore
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn( name="company_id", nullable=false )
   private Company company;
 

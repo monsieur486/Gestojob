@@ -17,7 +17,8 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class ApiMailController {
 
-  private final MailService mailService;
+  @Autowired
+  private MailService mailService;
 
   @Autowired
   private CompanyService companyService;

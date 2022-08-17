@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,9 +26,14 @@ public class ApiCompanyController {
   }
 
   @GetMapping(value = "/companies")
-  public ResponseEntity<Object> allCompany() {
+  public ResponseEntity<Object> allCompany(@RequestParam(required = false) String name) {
     try {
-      List<Company> result = companyService.allCompany();
+      List<Company> result = new ArrayList<>();
+      if(name == null){
+        result.addAll(companyService.allCompany());
+      } else {
+        result.addAll(companyService.findByNameContaining(name));
+      }
       return Message.generateResponse(null, HttpStatus.OK, result);
     } catch (Exception e) {
       return Message.generateResponse(e.getMessage(), HttpStatus.SERVICE_UNAVAILABLE, null);

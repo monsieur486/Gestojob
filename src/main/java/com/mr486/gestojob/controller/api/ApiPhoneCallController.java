@@ -17,7 +17,8 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class ApiPhoneCallController {
 
-  private final PhoneCallService phoneCallService;
+  @Autowired
+  private PhoneCallService phoneCallService;
 
   @Autowired
   private CompanyService companyService;
@@ -53,7 +54,7 @@ public class ApiPhoneCallController {
         return Message.generateResponse(null, HttpStatus.OK, result);
       } else {
         return Message.generateResponse(
-          "Phone not found with id: " + id.toString(),
+          "PhoneCall not found with id: " + id.toString(),
           HttpStatus.NOT_FOUND,
           null
         );

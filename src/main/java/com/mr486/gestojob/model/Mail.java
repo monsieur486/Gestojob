@@ -17,7 +17,7 @@ import java.util.Objects;
 @Table(name = "mail")
 public class Mail implements Serializable {
 
-  private static final long serialVersionUID = 4048798961366546485L;
+  private static final long serialVersionUID = 1L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class Mail implements Serializable {
   private java.sql.Time mailTime;
 
   @JsonIgnore
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn( name="company_id", nullable=false )
   private Company company;
 

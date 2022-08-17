@@ -4,6 +4,7 @@ import com.mr486.gestojob.dto.CompanyDto;
 import com.mr486.gestojob.model.Company;
 import com.mr486.gestojob.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -24,7 +25,13 @@ public class CompanyService {
 
   public List<Company> allCompany() {
     List<Company> compagnies;
-    compagnies = companyRepository.findAll();
+    compagnies = companyRepository.findAll(Sort.by("name"));
+    return compagnies;
+  }
+
+  public List<Company> findByNameContaining(String title) {
+    List<Company> compagnies;
+    compagnies = companyRepository.findByNameContaining(title);
     return compagnies;
   }
 
@@ -37,6 +44,7 @@ public class CompanyService {
       companyDto.getComplement(),
       companyDto.getPostalCode(),
       companyDto.getCity(),
+      companyDto.getNegative(),
       companyDto.getComment()
     );
     return companyRepository.save(result);

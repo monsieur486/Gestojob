@@ -15,7 +15,8 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class ApiAppointmentController {
 
-  private final AppointmentService appointmentService;
+  @Autowired
+  private AppointmentService appointmentService;
 
   @Autowired
   private CompanyService companyService;
@@ -72,7 +73,6 @@ public class ApiAppointmentController {
     } else {
       return Message.generateResponse("Company not found with id: " + id.toString(), HttpStatus.NOT_FOUND, null);
     }
-
   }
 
   @PutMapping("/appointments/{id}")

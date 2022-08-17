@@ -50,12 +50,18 @@ public class Company implements Serializable {
   private Boolean negative = false;
 
   @OneToMany(mappedBy="company", cascade = CascadeType.REMOVE)
+  @OrderBy("mailDate DESC")
+  @ToString.Exclude
   private List<Mail> emailsList;
 
   @OneToMany(mappedBy="company", cascade = CascadeType.REMOVE)
+  @OrderBy("phoneCallDate DESC")
+  @ToString.Exclude
   private List<PhoneCall> phoneCallsList;
 
   @OneToMany(mappedBy="company", cascade = CascadeType.REMOVE)
+  @OrderBy("appointmentDate DESC")
+  @ToString.Exclude
   private List<Appointment> appointmentsList;
 
   @Lob
@@ -70,6 +76,7 @@ public class Company implements Serializable {
     String complement,
     String postalCode,
     String city,
+    Boolean negative,
     String comment
   ){
     this.name = name;
@@ -80,7 +87,7 @@ public class Company implements Serializable {
     this.postalCode = postalCode;
     this.city = city;
     this.comment = comment;
-    this.negative = true;
+    this.negative = negative;
   }
 
   @Override

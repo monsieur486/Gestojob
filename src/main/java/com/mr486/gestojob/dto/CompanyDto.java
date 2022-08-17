@@ -16,5 +16,5 @@ public class CompanyDto {
   private String postalCode;
   private String city;
   private String comment;
-  private Boolean negative = false;
+  private Boolean negative;
 }
