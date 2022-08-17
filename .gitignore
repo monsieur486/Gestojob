@@ -35,7 +35,5 @@ build/
 /.idea/
 /node_modules/
 
-/.env
-/env.properties
 /prod.sh
 /yarn.lock
