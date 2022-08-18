@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db:3306
--- Généré le : mer. 17 août 2022 à 20:41
+-- Généré le : jeu. 18 août 2022 à 06:02
 -- Version du serveur : 5.7.39
 -- Version de PHP : 8.0.19
 
@@ -85,8 +85,8 @@ CREATE TABLE `mail` (
 
 INSERT INTO `mail` (`id`, `app_object`, `comment`, `mail_date`, `mail_time`, `company_id`) VALUES
 (1, 0, 'Ras', '2022-01-22', '09:35:00', 1),
-(2, 0, 'Ras', '2022-03-22', '09:35:00', 1),
-(3, 0, 'Ras', '2022-02-22', '09:35:00', 1);
+(2, 1, 'Ras', '2022-03-22', '09:35:00', 1),
+(3, 2, 'https://fr.indeed.com/jobs?q=Offre+Emploi&redirected=1&vjk=1372b785cbe39c60&advn=207820537553219', '2022-02-22', '09:35:00', 1);
 
 -- --------------------------------------------------------
 
