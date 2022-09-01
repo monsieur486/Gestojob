@@ -9,12 +9,14 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+@Builder
+@AllArgsConstructor
 @Component
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-@Entity
+@Entity(name = "Company")
 @Table(name = "company")
 public class Company implements Serializable {
 
